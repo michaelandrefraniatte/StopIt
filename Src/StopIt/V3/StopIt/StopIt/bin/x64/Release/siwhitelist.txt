@@ -1,0 +1,59 @@
+StopIt
+svchost
+Secure System
+System
+Idle
+Memory Compression
+csrss
+dwm
+lsass
+ntoskrnl
+smss
+explorer
+wininit
+winlogon
+LsaIso
+LogonUI
+SecurityHealthService
+StartMenuExperienceHost
+sihost
+fontdrvhost
+audiodg
+ctfmon
+WmiPrvSE
+SecurityHealthHost
+smartscreen
+conhost
+Call of Duty Launcher
+cod
+codCrashHandler
+ReportCodBug
+bootstrapper
+bootstrapperCrashHandler
+BlizzardBrowser
+Battle.net
+Battle.net Launcher
+Agent
+consent
+Taskmgr
+LaunchTM
+mmc
+perfmon
+Registry
+services
+MsMpEng
+NisSrv
+SgrmBroker
+MpCmdRun
+LockApp
+csc
+cvtres
+ciine
+NVIDIA Web Helper
+nvcontainer
+NVIDIA Share
+nvsphelper64
+NVDisplay.Container
+NVIDIA GeForce Experience
+nvnodejslauncher
+
