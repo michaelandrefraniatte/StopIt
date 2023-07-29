@@ -38,10 +38,11 @@
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = global::StopItDns.Properties.Resources.newblogo;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(341, 242);
+            this.ClientSize = new System.Drawing.Size(242, 188);
+            this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "StopItDns";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);

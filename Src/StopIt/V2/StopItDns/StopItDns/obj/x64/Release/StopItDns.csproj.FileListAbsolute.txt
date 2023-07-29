@@ -9,3 +9,14 @@ C:\Users\micha\Documents\File\perso\StopIt\Src\V2\StopItDns\StopItDns\bin\x64\Re
 C:\Users\micha\Documents\File\perso\StopIt\Src\V2\StopItDns\StopItDns\obj\x64\Release\StopItDns.Form1.resources
 C:\Users\micha\Documents\File\perso\StopIt\Src\V2\StopItDns\StopItDns\obj\x64\Release\StopItDns.exe
 C:\Users\micha\Documents\File\perso\StopIt\Src\V2\StopItDns\StopItDns\obj\x64\Release\StopItDns.pdb
+C:\Users\micha\Documents\tool\StopIt\Src\StopItDns\StopItDns\bin\x64\Release\StopItDns.exe.config
+C:\Users\micha\Documents\tool\StopIt\Src\StopItDns\StopItDns\bin\x64\Release\StopItDns.exe
+C:\Users\micha\Documents\tool\StopIt\Src\StopItDns\StopItDns\bin\x64\Release\StopItDns.pdb
+C:\Users\micha\Documents\tool\StopIt\Src\StopItDns\StopItDns\obj\x64\Release\StopItDns.csproj.AssemblyReference.cache
+C:\Users\micha\Documents\tool\StopIt\Src\StopItDns\StopItDns\obj\x64\Release\StopItDns.csproj.SuggestedBindingRedirects.cache
+C:\Users\micha\Documents\tool\StopIt\Src\StopItDns\StopItDns\obj\x64\Release\StopItDns.Form1.resources
+C:\Users\micha\Documents\tool\StopIt\Src\StopItDns\StopItDns\obj\x64\Release\StopItDns.Properties.Resources.resources
+C:\Users\micha\Documents\tool\StopIt\Src\StopItDns\StopItDns\obj\x64\Release\StopItDns.csproj.GenerateResource.cache
+C:\Users\micha\Documents\tool\StopIt\Src\StopItDns\StopItDns\obj\x64\Release\StopItDns.csproj.CoreCompileInputs.cache
+C:\Users\micha\Documents\tool\StopIt\Src\StopItDns\StopItDns\obj\x64\Release\StopItDns.exe
+C:\Users\micha\Documents\tool\StopIt\Src\StopItDns\StopItDns\obj\x64\Release\StopItDns.pdb
