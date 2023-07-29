@@ -1,4 +1,5 @@
 StopIt
+StopItDns
 svchost
 Secure System
 System
@@ -49,8 +50,6 @@ LockApp
 csc
 cvtres
 ciine
-
-
 
 
 
