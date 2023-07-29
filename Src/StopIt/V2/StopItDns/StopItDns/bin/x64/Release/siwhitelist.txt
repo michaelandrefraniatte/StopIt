@@ -1,5 +1,4 @@
 .r.cloudfront.net
-.1e100.net
 
 
 
