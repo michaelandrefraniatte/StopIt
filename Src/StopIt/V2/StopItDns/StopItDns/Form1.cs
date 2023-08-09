@@ -66,7 +66,7 @@ namespace StopItDns
                     {
                         Addr = connection.RemoteEndPoint.Address;
                         RemoteAdrr = Addr.ToString();
-                        if (RemoteAdrr != "::1" & RemoteAdrr != "127.0.0.1" & RemoteAdrr != "0.0.0.0" & RemoteAdrr != "192.168.1.1" & !IsInRange("24.105.0.0", "24.105.63.255", RemoteAdrr) & !IsInRange("185.34.104.0", "185.34.108.255", RemoteAdrr) & !IsInRange("37.244.0.0", "37.244.255.255", RemoteAdrr) & !IsInRange("185.60.0.0", "185.60.255.255", RemoteAdrr) & !IsInRange("8.238.0.0", "8.238.255.255", RemoteAdrr) & !IsInRange("162.247.0.0", "162.247.255.255", RemoteAdrr) & !IsInRange("137.221.0.0", "137.221.255.255", RemoteAdrr) & !IsInRange("103.4.0.0", "103.4.255.255", RemoteAdrr) & !IsInRange("138.199.0.0", "138.199.255.255", RemoteAdrr))
+                        if (RemoteAdrr != "::1" & RemoteAdrr != "127.0.0.1" & RemoteAdrr != "0.0.0.0" & RemoteAdrr != "192.168.1.1" & !IsInRange("24.105.0.0", "24.105.63.255", RemoteAdrr) & !IsInRange("185.34.104.0", "185.34.108.255", RemoteAdrr) & !IsInRange("37.244.0.0", "37.244.255.255", RemoteAdrr) & !IsInRange("185.60.0.0", "185.60.255.255", RemoteAdrr) & !IsInRange("8.238.0.0", "8.238.255.255", RemoteAdrr) & !IsInRange("162.247.0.0", "162.247.255.255", RemoteAdrr) & !IsInRange("137.221.0.0", "137.221.255.255", RemoteAdrr) & !IsInRange("103.4.0.0", "103.4.255.255", RemoteAdrr) & !IsInRange("138.199.0.0", "138.199.255.255", RemoteAdrr) & !IsInRange("8.241.0.0", "8.241.255.255", RemoteAdrr))
                         {
                             Scaledip = getScaleIP(RemoteAdrr);
                             checking = false;
