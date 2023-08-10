@@ -20,3 +20,14 @@ C:\Users\micha\Documents\File\perso\StopIt\Src\V2\StopIt\StopIt\obj\x64\Release\
 C:\Users\micha\Documents\File\perso\StopIt\Src\V2\StopIt\StopIt\obj\x64\Release\StopIt.csproj.CoreCompileInputs.cache
 C:\Users\micha\Documents\File\perso\StopIt\Src\V2\StopIt\StopIt\obj\x64\Release\StopIt.exe
 C:\Users\micha\Documents\File\perso\StopIt\Src\V2\StopIt\StopIt\obj\x64\Release\StopIt.pdb
+C:\Users\micha\Documents\tool\StopIt\Src\StopIt\StopIt\bin\x64\Release\StopIt.exe.config
+C:\Users\micha\Documents\tool\StopIt\Src\StopIt\StopIt\bin\x64\Release\StopIt.exe
+C:\Users\micha\Documents\tool\StopIt\Src\StopIt\StopIt\bin\x64\Release\StopIt.pdb
+C:\Users\micha\Documents\tool\StopIt\Src\StopIt\StopIt\obj\x64\Release\StopIt.csproj.AssemblyReference.cache
+C:\Users\micha\Documents\tool\StopIt\Src\StopIt\StopIt\obj\x64\Release\StopIt.csproj.SuggestedBindingRedirects.cache
+C:\Users\micha\Documents\tool\StopIt\Src\StopIt\StopIt\obj\x64\Release\StopIt.Form1.resources
+C:\Users\micha\Documents\tool\StopIt\Src\StopIt\StopIt\obj\x64\Release\StopIt.Properties.Resources.resources
+C:\Users\micha\Documents\tool\StopIt\Src\StopIt\StopIt\obj\x64\Release\StopIt.csproj.GenerateResource.cache
+C:\Users\micha\Documents\tool\StopIt\Src\StopIt\StopIt\obj\x64\Release\StopIt.csproj.CoreCompileInputs.cache
+C:\Users\micha\Documents\tool\StopIt\Src\StopIt\StopIt\obj\x64\Release\StopIt.exe
+C:\Users\micha\Documents\tool\StopIt\Src\StopIt\StopIt\obj\x64\Release\StopIt.pdb
