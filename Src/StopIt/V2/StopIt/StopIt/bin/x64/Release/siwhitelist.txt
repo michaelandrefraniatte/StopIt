@@ -1,4 +1,4 @@
-StopIt
+﻿StopIt
 StopItDns
 svchost
 Secure System
@@ -25,8 +25,16 @@ WmiPrvSE
 SecurityHealthHost
 smartscreen
 conhost
-Call of Duty Launcher
+BlackOpsColdWar
+BlackOpsColdWarCrashHandler
+Black Ops Cold War Launcher
+ModernWarfare
+Modern Warfare Launcher
+Vanguard
+Vanguard Launcher
+VanguardCrashHandler
 cod
+Call of Duty Launcher
 codCrashHandler
 ReportCodBug
 bootstrapper

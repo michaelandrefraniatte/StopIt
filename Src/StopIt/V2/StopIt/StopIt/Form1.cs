@@ -138,7 +138,25 @@ namespace StopIt
                             {
                                 while (processid == 0)
                                 {
-                                    var processes = Process.GetProcessesByName(""cod"");
+                                    Process[] processes = Process.GetProcessesByName(""BlackOpsColdWar"");
+                                    foreach (var p in processes)
+                                    {
+                                        processid = p.Id;
+                                        break;
+                                    }
+                                    processes = Process.GetProcessesByName(""ModernWarfare"");
+                                    foreach (var p in processes)
+                                    {
+                                        processid = p.Id;
+                                        break;
+                                    }
+                                    processes = Process.GetProcessesByName(""Vanguard"");
+                                    foreach (var p in processes)
+                                    {
+                                        processid = p.Id;
+                                        break;
+                                    }
+                                    processes = Process.GetProcessesByName(""cod"");
                                     foreach (var p in processes)
                                     {
                                         processid = p.Id;
