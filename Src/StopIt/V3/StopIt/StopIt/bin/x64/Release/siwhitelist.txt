@@ -24,8 +24,16 @@ WmiPrvSE
 SecurityHealthHost
 smartscreen
 conhost
-Call of Duty Launcher
+BlackOpsColdWar
+BlackOpsColdWarCrashHandler
+Black Ops Cold War Launcher
+ModernWarfare
+Modern Warfare Launcher
+Vanguard
+Vanguard Launcher
+VanguardCrashHandler
 cod
+Call of Duty Launcher
 codCrashHandler
 ReportCodBug
 bootstrapper
@@ -49,11 +57,7 @@ LockApp
 csc
 cvtres
 ciine
-NVIDIA Web Helper
-nvcontainer
-NVIDIA Share
-nvsphelper64
-NVDisplay.Container
-NVIDIA GeForce Experience
-nvnodejslauncher
+
+
+
 
