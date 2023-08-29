@@ -273,7 +273,6 @@ namespace FairPlay
             try
             {
                 Array.Copy(fbytes, 1, fbytesshift, 0, size - 1);
-                Array.Resize(ref fbytesshift, size);
                 fbytesshift[size - 1] = (byte)rnd.Next(180, 256);
                 fbytes = fbytesshift;
                 for (int i = (int)bA; i < (int)lA; i = i + size)
@@ -301,7 +300,7 @@ namespace FairPlay
                 effic = rnd.Next(10, 20);
                 size = 2147483647 / effic;
                 fbytes = new byte[size];
-                fbytesshift = new byte[size - 1];
+                fbytesshift = new byte[size];
                 sizei = (IntPtr)size;
                 sizeu = (UInt64)size;
                 for (int j = 0; j < size; j++)
