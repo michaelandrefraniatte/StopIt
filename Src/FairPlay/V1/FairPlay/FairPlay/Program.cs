@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Security.Principal;
+using System.Collections;
 namespace FairPlay
 {
     class Program
@@ -66,10 +67,9 @@ namespace FairPlay
         public static UInt64 sizeu;
         private static int effic; // (8587934592 - 140000000) / 2147483647 = 4;
         public static int size;
-        public static byte[] fbytes;
+        public static byte[] fbytes, fbytesshift;
         private static IntPtr lpNumberOfBytesRead;
         private static Random rnd = new Random();
-        private static List<byte> list;
         const uint DELETE = 0x00010000;
         const uint READ_CONTROL = 0x00020000;
         const uint WRITE_DAC = 0x00040000;
@@ -272,10 +272,10 @@ namespace FairPlay
         {
             try
             {
-                list = fbytes.ToList();
-                list.RemoveAt(rnd.Next(0, list.Count));
-                list.Add((byte)rnd.Next(0, 256));
-                fbytes = list.ToArray();
+                Array.Copy(fbytes, 1, fbytesshift, 0, size - 1);
+                Array.Resize(ref fbytesshift, size);
+                fbytesshift[size - 1] = (byte)rnd.Next(180, 256);
+                fbytes = fbytesshift;
                 for (int i = (int)bA; i < (int)lA; i = i + size)
                 {
                     Ai = (IntPtr)i;
@@ -298,9 +298,10 @@ namespace FairPlay
         {
             try
             {
-                effic = rnd.Next(50, 100);
+                effic = rnd.Next(10, 20);
                 size = 2147483647 / effic;
                 fbytes = new byte[size];
+                fbytesshift = new byte[size - 1];
                 sizei = (IntPtr)size;
                 sizeu = (UInt64)size;
                 for (int j = 0; j < size; j++)
