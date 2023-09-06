@@ -1,0 +1,69 @@
+﻿StopIt
+StopItDns
+svchost
+Secure System
+System
+Idle
+Memory Compression
+csrss
+dwm
+lsass
+ntoskrnl
+smss
+explorer
+wininit
+winlogon
+LsaIso
+LogonUI
+SecurityHealthService
+StartMenuExperienceHost
+sihost
+fontdrvhost
+audiodg
+ctfmon
+WmiPrvSE
+SecurityHealthHost
+smartscreen
+conhost
+BlackOpsColdWar
+BlackOpsColdWarCrashHandler
+Black Ops Cold War Launcher
+ModernWarfare
+Modern Warfare Launcher
+Vanguard
+Vanguard Launcher
+VanguardCrashHandler
+cod
+Call of Duty Launcher
+codCrashHandler
+ReportCodBug
+bootstrapper
+bootstrapperCrashHandler
+BlizzardBrowser
+Battle.net
+Battle.net Launcher
+Agent
+consent
+Taskmgr
+LaunchTM
+mmc
+perfmon
+Registry
+services
+MsMpEng
+NisSrv
+SgrmBroker
+MpCmdRun
+LockApp
+csc
+cvtres
+ciine
+
+
+
+
+
+
+
+
+

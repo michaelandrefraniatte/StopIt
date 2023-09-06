@@ -1,0 +1,44 @@
+﻿  Source.cpp
+C:\Users\micha\Documents\tool\StopIt\V4\stopithostnames\stopithostnames\Source.cpp(53,17): warning C4101: 'ipaddr' : variable locale non référencée
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xstring(2859,53): warning C4244: 'argument' : conversion de 'wchar_t' en 'const _Elem', perte possible de données
+          with
+          [
+              _Elem=char
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xstring(2718,1): message : voir la référence à l'instanciation de la fonction modèle 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<wchar_t*,wchar_t*,_Size_type>(_Iter,const _Sent,_Size)' en cours de compilation
+          with
+          [
+              _Size_type=unsigned __int64,
+              _Iter=wchar_t *,
+              _Sent=wchar_t *,
+              _Size=unsigned __int64
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xstring(2718,37): message : voir la référence à l'instanciation de la fonction modèle 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<wchar_t*,wchar_t*,_Size_type>(_Iter,const _Sent,_Size)' en cours de compilation
+          with
+          [
+              _Size_type=unsigned __int64,
+              _Iter=wchar_t *,
+              _Sent=wchar_t *,
+              _Size=unsigned __int64
+          ]
+C:\Users\micha\Documents\tool\StopIt\V4\stopithostnames\stopithostnames\Source.cpp(44): message : voir la référence à l'instanciation de la fonction modèle 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' en cours de compilation
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_iterator<std::_String_val<std::_Simple_types<wchar_t>>>,
+              _Alloc=std::allocator<char>
+          ]
+C:\Users\micha\Documents\tool\StopIt\V4\stopithostnames\stopithostnames\Source.cpp(44,33): message : voir la référence à l'instanciation de la fonction modèle 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' en cours de compilation
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_iterator<std::_String_val<std::_Simple_types<wchar_t>>>,
+              _Alloc=std::allocator<char>
+          ]
+     Création de la bibliothèque C:\Users\micha\Documents\tool\StopIt\V4\stopithostnames\x64\Release\stopithostnames.lib et de l'objet C:\Users\micha\Documents\tool\StopIt\V4\stopithostnames\x64\Release\stopithostnames.exp
+  Génération de code en cours
+  28 of 141 functions (19.9%) were compiled, the rest were copied from previous compilation.
+    12 functions were new in current compilation
+    11 functions had inline decision re-evaluated but remain unchanged
+  Fin de la génération du code
+  stopithostnames.vcxproj -> C:\Users\micha\Documents\tool\StopIt\V4\stopithostnames\x64\Release\stopithostnames.dll
