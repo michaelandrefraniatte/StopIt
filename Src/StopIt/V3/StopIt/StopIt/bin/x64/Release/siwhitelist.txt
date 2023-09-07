@@ -1,5 +1,4 @@
 ﻿StopIt
-StopItDns
 svchost
 Secure System
 System
@@ -58,6 +57,15 @@ LockApp
 csc
 cvtres
 ciine
+NVIDIA Web Helper
+nvcontainer
+NVIDIA Share
+nvsphelper64
+NVDisplay.Container
+NVIDIA GeForce Experience
+nvnodejslauncher
+backgroundTaskHost
+
 
 
 

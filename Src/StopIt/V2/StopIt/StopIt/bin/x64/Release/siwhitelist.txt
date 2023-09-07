@@ -1,5 +1,4 @@
 ﻿StopIt
-StopItDns
 svchost
 Secure System
 System
@@ -65,6 +64,8 @@ nvsphelper64
 NVDisplay.Container
 NVIDIA GeForce Experience
 nvnodejslauncher
+backgroundTaskHost
+
 
 
 
