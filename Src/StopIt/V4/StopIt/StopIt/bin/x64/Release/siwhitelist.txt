@@ -24,6 +24,7 @@ WmiPrvSE
 SecurityHealthHost
 smartscreen
 conhost
+backgroundTaskHost
 BlackOpsColdWar
 BlackOpsColdWarCrashHandler
 Black Ops Cold War Launcher
@@ -57,14 +58,6 @@ LockApp
 csc
 cvtres
 ciine
-NVIDIA Web Helper
-nvcontainer
-NVIDIA Share
-nvsphelper64
-NVDisplay.Container
-NVIDIA GeForce Experience
-nvnodejslauncher
-backgroundTaskHost
 
 
 
