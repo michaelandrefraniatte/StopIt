@@ -55,9 +55,6 @@ NisSrv
 SgrmBroker
 MpCmdRun
 LockApp
-csc
-cvtres
-ciine
 
 
 
