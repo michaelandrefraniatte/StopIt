@@ -32,14 +32,14 @@ namespace StopIt
         public static int processid = 0;
         private static List<string> ProcWLRecs = new List<string>(), ProcWLSplitRecs = new List<string>(), procwlrecs = new List<string>();
         private static string procnames;
-        private static List<string> dnsnames = new List<string>(), DNSBLRecs = new List<string>(), dnsblrecs = new List<string>();
+        private static List<string> dnsnames = new List<string>(), ipranges = new List<string>(), DNSIPBLRecs = new List<string>(), dnsipblrecs = new List<string>();
         private static List<string> scaledips = new List<string>();
         private static string hostname = "";
         private static INetFwRule2 newRule;
         private static INetFwPolicy2 firewallpolicy;
         private static string RemoteAdrr = "0.0.0.0", Scaledip = "0.0.0.0";
         private static IPAddress Addr;
-        private static bool checking, checkingname;
+        private static bool checking, checkingname, checkingip;
         private static bool closed = false;
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -74,7 +74,21 @@ namespace StopIt
                         dnsnames.Add(dnsname);
                 }
             }
-            Task.Run(() => StartStopItDNS());
+            using (StreamReader file = new StreamReader("siwhitelistip.txt"))
+            {
+                while (true)
+                {
+                    string iprange = file.ReadLine();
+                    if (iprange == "")
+                    {
+                        file.Close();
+                        break;
+                    }
+                    else
+                        ipranges.Add(iprange);
+                }
+            }
+            Task.Run(() => StartStopItDNSIP());
         }
         public static void StartStopItWL()
         {
@@ -87,7 +101,7 @@ namespace StopIt
                 Thread.Sleep(50);
             }
         }
-        public void StartStopItDNS()
+        public void StartStopItDNSIP()
         {
             while (!closed)
             {
@@ -99,34 +113,47 @@ namespace StopIt
                     {
                         Addr = connection.RemoteEndPoint.Address;
                         RemoteAdrr = Addr.ToString();
-                        if (RemoteAdrr != "::1" & RemoteAdrr != "127.0.0.1" & RemoteAdrr != "0.0.0.0" & RemoteAdrr != "192.168.1.1" & !IsInRange("24.105.0.0", "24.105.63.255", RemoteAdrr) & !IsInRange("185.34.104.0", "185.34.108.255", RemoteAdrr) & !IsInRange("37.244.0.0", "37.244.255.255", RemoteAdrr) & !IsInRange("185.60.0.0", "185.60.255.255", RemoteAdrr) & !IsInRange("8.238.0.0", "8.238.255.255", RemoteAdrr) & !IsInRange("162.247.0.0", "162.247.255.255", RemoteAdrr) & !IsInRange("137.221.0.0", "137.221.255.255", RemoteAdrr) & !IsInRange("103.4.0.0", "103.4.255.255", RemoteAdrr) & !IsInRange("138.199.0.0", "138.199.255.255", RemoteAdrr) & !IsInRange("8.241.0.0", "8.241.255.255", RemoteAdrr))
+                        if (RemoteAdrr != "::1" & RemoteAdrr != "127.0.0.1" & RemoteAdrr != "0.0.0.0" & RemoteAdrr != "192.168.1.1")
                         {
-                            Scaledip = getScaleIP(RemoteAdrr);
-                            checking = false;
-                            foreach (string scaledip in scaledips)
+                            checkingip = false;
+                            foreach (string iprange in ipranges)
                             {
-                                if (Scaledip == scaledip)
+                                string[] ip = iprange.Split('-');
+                                if (IsInRange(ip[0], ip[1], RemoteAdrr))
                                 {
-                                    checking = true;
+                                    checkingip = true;
                                     break;
                                 }
                             }
-                            if (!checking)
+                            if (!checkingip)
                             {
-                                scaledips.Add(Scaledip);
-                                hostname = Dns.GetHostEntry(RemoteAdrr).HostName;
-                                checkingname = false;
-                                foreach (string dnsname in dnsnames)
+                                Scaledip = getScaleIP(RemoteAdrr);
+                                checking = false;
+                                foreach (string scaledip in scaledips)
                                 {
-                                    if (hostname.EndsWith(dnsname))
+                                    if (Scaledip == scaledip)
                                     {
-                                        checkingname = true;
+                                        checking = true;
                                         break;
                                     }
                                 }
-                                if (!checkingname)
+                                if (!checking)
                                 {
-                                    addToFirewall(Scaledip, hostname + ", " + RemoteAdrr);
+                                    scaledips.Add(Scaledip);
+                                    hostname = Dns.GetHostEntry(RemoteAdrr).HostName;
+                                    checkingname = false;
+                                    foreach (string dnsname in dnsnames)
+                                    {
+                                        if (hostname.EndsWith(dnsname))
+                                        {
+                                            checkingname = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!checkingname)
+                                    {
+                                        addToFirewall(Scaledip, hostname + ", " + RemoteAdrr);
+                                    }
                                 }
                             }
                         }
@@ -162,7 +189,7 @@ namespace StopIt
         }
         private static void addToFirewall(string IP, string dnsrec)
         {
-            DNSBLRecs.Add(dnsrec);
+            DNSIPBLRecs.Add(dnsrec);
             newRule = (INetFwRule2)Activator.CreateInstance(Type.GetTypeFromProgID("HNetCfg.FWRule"));
             newRule.Name = IP;
             newRule.Protocol = (int)NET_FW_IP_PROTOCOL_.NET_FW_IP_PROTOCOL_ANY;
@@ -188,10 +215,10 @@ namespace StopIt
                 }
                 createdfile.Close();
             }
-            dnsblrecs = DNSBLRecs;
-            using (StreamWriter createdfile = new StreamWriter("sirecorddns.txt"))
+            dnsipblrecs = DNSIPBLRecs;
+            using (StreamWriter createdfile = new StreamWriter("sirecorddnsip.txt"))
             {
-                foreach (string dnsrec in dnsblrecs)
+                foreach (string dnsrec in dnsipblrecs)
                 {
                     createdfile.WriteLine(dnsrec);
                 }

@@ -1,6 +1,8 @@
-.r.cloudfront.net
-
-
+﻿.r.cloudfront.net
+.bc.googleusercontent.com
+.eu-central-1.compute.amazonaws.com
+.deploy.static.akamaitechnologies.com
+.1e100.net
 
 
 
