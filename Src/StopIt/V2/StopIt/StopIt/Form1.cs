@@ -206,9 +206,12 @@ namespace StopIt
         {
             closed = true;
             Thread.Sleep(200);
+            string localDate = DateTime.Now.ToString();
+            string date = localDate.Replace(" ", "-").Replace("/", "-").Replace(":", "-");
             procwlrecs = ProcWLRecs;
-            using (StreamWriter createdfile = new StreamWriter("sirecord.txt"))
+            using (StreamWriter createdfile = File.AppendText("sirecord.txt"))
             {
+                createdfile.WriteLine(date);
                 foreach (string procrec in procwlrecs)
                 {
                     createdfile.WriteLine(procrec);
@@ -216,8 +219,9 @@ namespace StopIt
                 createdfile.Close();
             }
             dnsipblrecs = DNSIPBLRecs;
-            using (StreamWriter createdfile = new StreamWriter("sirecorddnsip.txt"))
+            using (StreamWriter createdfile = File.AppendText("sirecorddnsip.txt"))
             {
+                createdfile.WriteLine(date);
                 foreach (string dnsrec in dnsipblrecs)
                 {
                     createdfile.WriteLine(dnsrec);
