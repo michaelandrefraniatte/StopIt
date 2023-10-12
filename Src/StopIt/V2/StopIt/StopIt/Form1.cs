@@ -200,6 +200,7 @@ namespace StopIt
             newRule.Action = NET_FW_ACTION_.NET_FW_ACTION_BLOCK;
             newRule.EdgeTraversal = false;
             firewallpolicy = (INetFwPolicy2)Activator.CreateInstance(Type.GetTypeFromProgID("HNetCfg.FwPolicy2"));
+            firewallpolicy.Rules.Remove(IP);
             firewallpolicy.Rules.Add(newRule);
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
