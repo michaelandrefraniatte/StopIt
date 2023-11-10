@@ -106,7 +106,7 @@ namespace StopIt
                 string procNames = procnamesbl;
                 if (procNames != "")
                     procblrecs = killProcessByNames(procNames).Replace(".exe", "").Split(',').ToList();
-                Thread.Sleep(100);
+                Thread.Sleep(140);
             }
         }
         private void ListView1_ItemCheck(object sender, ItemCheckEventArgs e)
