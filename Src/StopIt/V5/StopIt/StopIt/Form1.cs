@@ -30,7 +30,7 @@ namespace StopIt
         public static extern void NtSetTimerResolution(uint DesiredResolution, bool SetResolution, ref uint CurrentResolution);
         public static uint CurrentResolution = 0;
         public static int processid = 0;
-        private static List<string> procBLs = new List<string>(), procbls = new List<string>(), ProcBLSplitRecs = new List<string>(), processes = new List<string>();
+        private static List<string> procBLs = new List<string>(), procbls = new List<string>(), procblrecs = new List<string>(), processes = new List<string>();
         private static string procnames = "", procnamesbl = "";
         private static bool closed = false;
         private void Form1_Load(object sender, EventArgs e)
@@ -63,7 +63,7 @@ namespace StopIt
             listView1.MultiSelect = true;
             listView1.CheckBoxes = true;
             listView1.Columns.Add("Process");
-            listView1.Columns[0].Width = 240;
+            listView1.Columns[0].Width = 370;
             procnames = processnames();
             procnames = procnames.Remove(procnames.Length - 1);
             procnames = procnames.Substring(1);
@@ -91,8 +91,8 @@ namespace StopIt
                 procnames = procnames.Substring(1);
                 procnames = procnames.Replace(".exe", "");
                 processes = procnames.Split(',').ToList();
-                ProcBLSplitRecs = procBLs;
-                list = processes.Union(ProcBLSplitRecs).ToList();
+                procblrecs = procBLs;
+                list = processes.Union(procblrecs).ToList();
                 list = list.Distinct().ToList();
                 foreach (string proc in list)
                 {
@@ -104,8 +104,8 @@ namespace StopIt
                     }
                 }
                 string procNames = procnamesbl;
-                if (procnamesbl != "")
-                    ProcBLSplitRecs = killProcessByNames(procNames).Replace(".exe", "").Split(',').ToList();
+                if (procNames != "")
+                    procblrecs = killProcessByNames(procNames).Replace(".exe", "").Split(',').ToList();
                 Thread.Sleep(100);
             }
         }
