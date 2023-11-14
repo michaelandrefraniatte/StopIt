@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -142,10 +143,7 @@ namespace StopIt
                 procnames = procnames.Substring(1);
                 procnames = procnames.Replace(".exe", "");
                 processes = procnames.Split(',').ToList();
-                procblrecs = procBLs;
-                proclist = processes.Union(procblrecs).ToList();
-                proclist = proclist.Distinct().ToList();
-                foreach (string proc in proclist)
+                foreach (string proc in processes)
                 {
                     if (this.listView1.FindItemWithText(proc) == null & proc != "")
                     {
@@ -158,39 +156,31 @@ namespace StopIt
                 if (procNames != "")
                     procblrecs = killProcessByNames(procNames).Replace(".exe", "").Split(',').ToList();
                 services = ServiceController.GetServices();
-                servlist = new List<string>();
                 foreach (ServiceController service in services)
                 {
-                    if (service.Status == ServiceControllerStatus.Running)
+                    try
                     {
-                        servlist.Add(service.ServiceName);
-                    }
-                }
-                servblrecs = servBLs;
-                servlist = servlist.Union(servblrecs).ToList();
-                servlist = servlist.Distinct().ToList();
-                foreach (string serv in servlist)
-                {
-                    if (this.listView2.FindItemWithText(serv) == null)
-                    {
-                        ListViewItem item = new ListViewItem();
-                        item.Text = serv;
-                        listView2.Items.Add(item);
-                    }
-                    if (servblrecs.Contains(serv))
-                    {
-                        try
+                        if (service.Status == ServiceControllerStatus.Running)
                         {
-                            ServiceController service = new ServiceController(serv);
-                            if (service.Status == ServiceControllerStatus.Running)
+                            if (this.listView2.FindItemWithText(service.ServiceName) == null)
+                            {
+                                ListViewItem item = new ListViewItem();
+                                item.Text = service.ServiceName;
+                                listView2.Items.Add(item);
+                            }
+                            var name = service.ServiceName;
+                            if (name.Length > 7)
+                                name = name.Substring(0, 7);
+                            servblrecs = servBLs;
+                            if (servblrecs.Any(n => n.StartsWith(name)))
                             {
                                 service.Stop();
                                 var timeout = new TimeSpan(0, 0, 5);
                                 service.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
                             }
                         }
-                        catch { }
                     }
+                    catch { }
                 }
                 Thread.Sleep(300);
             }
@@ -200,7 +190,6 @@ namespace StopIt
             try
             {
                 ListView listview = listView1;
-                procBLs = procBLs.Distinct().ToList();
                 if (listview.Items[e.Index].Checked)
                 {
                     int index = procBLs.IndexOf(listview.Items[e.Index].Text);
@@ -216,11 +205,15 @@ namespace StopIt
                 }
                 else
                 {
-                    procBLs.Add(listview.Items[e.Index].Text);
-                    procnamesbl = "";
-                    foreach (string procName in procBLs)
+                    int index = procBLs.IndexOf(listview.Items[e.Index].Text);
+                    if (index < 0)
                     {
-                        procnamesbl += procName + ".exe ";
+                        procBLs.Add(listview.Items[e.Index].Text);
+                        procnamesbl = "";
+                        foreach (string procName in procBLs)
+                        {
+                            procnamesbl += procName + ".exe ";
+                        }
                     }
                 }
             }
@@ -229,40 +222,21 @@ namespace StopIt
         private void ListView2_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             ListView listview = listView2;
-            servBLs = servBLs.Distinct().ToList();
             if (listview.Items[e.Index].Checked)
             {
                 int index = servBLs.IndexOf(listview.Items[e.Index].Text);
                 if (index >= 0)
                 {
                     servBLs.RemoveAt(index);
-                    try
-                    {
-                        ServiceController service = new ServiceController(listview.Items[e.Index].Text);
-                        if (service.Status == ServiceControllerStatus.Stopped)
-                        {
-                            service.Start();
-                            var timeout = new TimeSpan(0, 0, 5);
-                            service.WaitForStatus(ServiceControllerStatus.Running, timeout);
-                        }
-                    }
-                    catch { }
                 }
             }
             else
             {
-                servBLs.Add(listview.Items[e.Index].Text);
-                try
+                int index = servBLs.IndexOf(listview.Items[e.Index].Text);
+                if (index < 0)
                 {
-                    ServiceController service = new ServiceController(listview.Items[e.Index].Text);
-                    if (service.Status == ServiceControllerStatus.Running)
-                    {
-                        service.Stop();
-                        var timeout = new TimeSpan(0, 0, 5);
-                        service.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
-                    }
+                    servBLs.Add(listview.Items[e.Index].Text);
                 }
-                catch { }
             }
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)

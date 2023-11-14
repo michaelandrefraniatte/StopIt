@@ -1,22 +1,19 @@
 SysMain
 UsoSvc
 AppReadiness
-TimeBrokerSvc
-StateRepository
-gpsvc
-TextInputManagementService
-NgcSvc
 NgcCtnrSvc
 WdiSystemHost
-WinHttpAutoProxySvc
 TokenBroker
 wlidsvc
 AppXSvc
 ClipSVC
-cbdhsvc_216a3
-CDPUserSvc_216a3
-NPSMSvc_216a3
-OneSyncSvc_216a3
-WpnUserService_216a3
+EventLog
+wmiApSrv
+BITS
+WpnUserService_899bd5
+OneSyncSvc_899bd5
+NPSMSvc_899bd5
+CDPUserSvc_899bd5
+cbdhsvc_899bd5
 
 
