@@ -120,83 +120,78 @@ namespace StopIt
                 }
             }
             servlist = servlist.Union(servBLs).ToList();
-            proclist = proclist.Distinct().ToList();
+            servlist = servlist.Distinct().ToList();
             int j = 0;
-            foreach (ServiceController service in services)
+            foreach (string serv in servlist)
             {
-                if (service.Status == ServiceControllerStatus.Running | servBLs.Contains(service.ServiceName))
+                ListViewItem item = new ListViewItem();
+                item.Text = serv;
+                listView2.Items.Add(item);
+                if (servBLs.Contains(serv))
                 {
-                    ListViewItem item = new ListViewItem();
-                    item.Text = service.ServiceName;
-                    listView2.Items.Add(item);
-                    if (servBLs.Contains(service.ServiceName))
-                    {
-                        listView2.Items[j].Checked = true;
-                    }
-                    j++;
+                    listView2.Items[j].Checked = true;
                 }
+                j++;
             }
             this.listView1.ItemCheck += ListView1_ItemCheck;
             this.listView2.ItemCheck += ListView2_ItemCheck;
             while (!closed)
             {
-                try
+                procnames = processnames();
+                procnames = procnames.Remove(procnames.Length - 1);
+                procnames = procnames.Substring(1);
+                procnames = procnames.Replace(".exe", "");
+                processes = procnames.Split(',').ToList();
+                procblrecs = procBLs;
+                proclist = processes.Union(procblrecs).ToList();
+                proclist = proclist.Distinct().ToList();
+                foreach (string proc in proclist)
                 {
-                    procnames = processnames();
-                    procnames = procnames.Remove(procnames.Length - 1);
-                    procnames = procnames.Substring(1);
-                    procnames = procnames.Replace(".exe", "");
-                    processes = procnames.Split(',').ToList();
-                    procblrecs = procBLs;
-                    proclist = processes.Union(procblrecs).ToList();
-                    proclist = proclist.Distinct().ToList();
-                    foreach (string proc in proclist)
+                    if (this.listView1.FindItemWithText(proc) == null & proc != "")
                     {
-                        if (this.listView1.FindItemWithText(proc) == null & proc != "")
-                        {
-                            ListViewItem item = new ListViewItem();
-                            item.Text = proc;
-                            listView1.Items.Add(item);
-                        }
+                        ListViewItem item = new ListViewItem();
+                        item.Text = proc;
+                        listView1.Items.Add(item);
                     }
-                    string procNames = procnamesbl;
-                    if (procNames != "")
-                        procblrecs = killProcessByNames(procNames).Replace(".exe", "").Split(',').ToList();
-                    services = ServiceController.GetServices();
-                    servlist = new List<string>();
-                    foreach (ServiceController service in services)
+                }
+                string procNames = procnamesbl;
+                if (procNames != "")
+                    procblrecs = killProcessByNames(procNames).Replace(".exe", "").Split(',').ToList();
+                services = ServiceController.GetServices();
+                servlist = new List<string>();
+                foreach (ServiceController service in services)
+                {
+                    if (service.Status == ServiceControllerStatus.Running)
                     {
-                        if (service.Status == ServiceControllerStatus.Running)
-                        {
-                            servlist.Add(service.ServiceName);
-                        }
+                        servlist.Add(service.ServiceName);
                     }
-                    servlist = servlist.Union(servBLs).ToList();
-                    proclist = proclist.Distinct().ToList();
-                    foreach (string serv in proclist)
+                }
+                servblrecs = servBLs;
+                servlist = servlist.Union(servblrecs).ToList();
+                servlist = servlist.Distinct().ToList();
+                foreach (string serv in servlist)
+                {
+                    if (this.listView2.FindItemWithText(serv) == null)
                     {
-                        ServiceController service = new ServiceController(serv);
-                        if (this.listView2.FindItemWithText(service.ServiceName) == null)
+                        ListViewItem item = new ListViewItem();
+                        item.Text = serv;
+                        listView2.Items.Add(item);
+                    }
+                    if (servblrecs.Contains(serv))
+                    {
+                        try
                         {
-                            ListViewItem item = new ListViewItem();
-                            item.Text = service.ServiceName;
-                            listView2.Items.Add(item);
-                        }
-                        ListView listview = listView2;
-                        var listviewitem = this.listView2.FindItemWithText(service.ServiceName);
-                        if (listview.Items[listviewitem.Index].Checked)
-                        {
-                            int index = servBLs.IndexOf(listview.Items[listviewitem.Index].Text);
-                            if (index >= 0 & service.Status == ServiceControllerStatus.Running)
+                            ServiceController service = new ServiceController(serv);
+                            if (service.Status == ServiceControllerStatus.Running)
                             {
                                 service.Stop();
                                 var timeout = new TimeSpan(0, 0, 5);
                                 service.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
                             }
                         }
+                        catch { }
                     }
                 }
-                catch { }
                 Thread.Sleep(300);
             }
         }
@@ -233,16 +228,16 @@ namespace StopIt
         }
         private void ListView2_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            try
+            ListView listview = listView2;
+            servBLs = servBLs.Distinct().ToList();
+            if (listview.Items[e.Index].Checked)
             {
-                ListView listview = listView2;
-                servBLs = servBLs.Distinct().ToList();
-                if (listview.Items[e.Index].Checked)
+                int index = servBLs.IndexOf(listview.Items[e.Index].Text);
+                if (index >= 0)
                 {
-                    int index = servBLs.IndexOf(listview.Items[e.Index].Text);
-                    if (index >= 0)
+                    servBLs.RemoveAt(index);
+                    try
                     {
-                        servBLs.RemoveAt(index);
                         ServiceController service = new ServiceController(listview.Items[e.Index].Text);
                         if (service.Status == ServiceControllerStatus.Stopped)
                         {
@@ -251,10 +246,14 @@ namespace StopIt
                             service.WaitForStatus(ServiceControllerStatus.Running, timeout);
                         }
                     }
+                    catch { }
                 }
-                else
+            }
+            else
+            {
+                servBLs.Add(listview.Items[e.Index].Text);
+                try
                 {
-                    servBLs.Add(listview.Items[e.Index].Text);
                     ServiceController service = new ServiceController(listview.Items[e.Index].Text);
                     if (service.Status == ServiceControllerStatus.Running)
                     {
@@ -263,8 +262,8 @@ namespace StopIt
                         service.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
                     }
                 }
+                catch { }
             }
-            catch { }
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {

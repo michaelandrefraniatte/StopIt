@@ -1,8 +1,22 @@
-AppXSvc
 SysMain
 UsoSvc
 AppReadiness
 TimeBrokerSvc
+StateRepository
+gpsvc
 TextInputManagementService
+NgcSvc
+NgcCtnrSvc
+WdiSystemHost
+WinHttpAutoProxySvc
+TokenBroker
+wlidsvc
+AppXSvc
+ClipSVC
+cbdhsvc_216a3
+CDPUserSvc_216a3
+NPSMSvc_216a3
+OneSyncSvc_216a3
+WpnUserService_216a3
 
 
