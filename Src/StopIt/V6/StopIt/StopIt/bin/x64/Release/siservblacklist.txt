@@ -1,3 +1,8 @@
 AppXSvc
+SysMain
+UsoSvc
+AppReadiness
+TimeBrokerSvc
+TextInputManagementService
 
 
