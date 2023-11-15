@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -9,7 +7,6 @@ using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using ListView = System.Windows.Forms.ListView;
 
 namespace StopIt
@@ -26,7 +23,6 @@ namespace StopIt
         [DllImport("stopitkills.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "killProcessByNames")]
         [return: MarshalAs(UnmanagedType.BStr)]
         public static extern string killProcessByNames(string processnames);
-
         [DllImport("winmm.dll", EntryPoint = "timeBeginPeriod")]
         public static extern uint TimeBeginPeriod(uint ms);
         [DllImport("winmm.dll", EntryPoint = "timeEndPeriod")]
@@ -37,12 +33,19 @@ namespace StopIt
         public static int processid = 0;
         private static List<string> procBLs = new List<string>(), procbls = new List<string>(), procblrecs = new List<string>(), processes = new List<string>();
         private static List<string> servBLs = new List<string>(), servbls = new List<string>(), servblrecs = new List<string>(), services = new List<string>();
-        private static string procnames = "", procnamesbl = "", servnames = "", servnamesbl = "";
+        private static string procnames = "", procnamesbl = "", servnames = "", servnamesbl = "", procNames = "", servNames = "";
+        private static TimeSpan timeout = new TimeSpan(0, 0, 1);
+        private static ListViewItem itemproc, itemserv;
         private static bool closed = false;
         private void Form1_Load(object sender, EventArgs e)
         {
             TimeBeginPeriod(1);
             NtSetTimerResolution(1, true, ref CurrentResolution);
+            Task.Run(() => StartStopItBlockProc());
+            Task.Run(() => StartStopItBlockServ());
+        }
+        public void StartStopItBlockProc()
+        {
             using (StreamReader file = new StreamReader("siprocblacklist.txt"))
             {
                 while (!closed)
@@ -60,26 +63,6 @@ namespace StopIt
                     }
                 }
             }
-            using (StreamReader file = new StreamReader("siservblacklist.txt"))
-            {
-                while (!closed)
-                {
-                    string servName = file.ReadLine();
-                    if (servName == "")
-                    {
-                        file.Close();
-                        break;
-                    }
-                    else
-                    {
-                        servBLs.Add(servName);
-                    }
-                }
-            }
-            Task.Run(() => StartStopItBlock());
-        }
-        public void StartStopItBlock()
-        {
             listView1.View = View.Details;
             listView1.GridLines = true;
             listView1.MultiSelect = true;
@@ -96,14 +79,59 @@ namespace StopIt
             int i = 0;
             foreach (string process in proclist)
             {
-                ListViewItem item = new ListViewItem();
-                item.Text = process;
-                listView1.Items.Add(item);
+                itemproc = new ListViewItem();
+                itemproc.Text = process;
+                listView1.Items.Add(itemproc);
                 if (procBLs.Contains(process))
                 {
                     listView1.Items[i].Checked = true;
                 }
                 i++;
+                Thread.Sleep(1);
+            }
+            this.listView1.ItemCheck += ListView1_ItemCheck;
+            for (; ; )
+            {
+                if (closed)
+                    break;
+                procnames = processnames();
+                procnames = procnames.Remove(procnames.Length - 1);
+                procnames = procnames.Substring(1);
+                procnames = procnames.Replace(".exe", "");
+                processes = procnames.Split(',').ToList();
+                foreach (string proc in processes)
+                {
+                    if (this.listView1.FindItemWithText(proc) == null & proc != "")
+                    {
+                        itemproc = new ListViewItem();
+                        itemproc.Text = proc;
+                        listView1.Items.Add(itemproc);
+                    }
+                    Thread.Sleep(1);
+                }
+                procNames = procnamesbl;
+                if (procNames != "")
+                    killProcessByNames(procNames);
+                Thread.Sleep(140);
+            }
+        }
+        public void StartStopItBlockServ()
+        {
+            using (StreamReader file = new StreamReader("siservblacklist.txt"))
+            {
+                while (!closed)
+                {
+                    string servName = file.ReadLine();
+                    if (servName == "")
+                    {
+                        file.Close();
+                        break;
+                    }
+                    else
+                    {
+                        servBLs.Add(servName);
+                    }
+                }
             }
             listView2.View = View.Details;
             listView2.GridLines = true;
@@ -119,42 +147,28 @@ namespace StopIt
                 {
                     servlist.Add(service.ServiceName);
                 }
+                Thread.Sleep(1);
             }
             servlist = servlist.Union(servBLs).ToList();
             servlist = servlist.Distinct().ToList();
             int j = 0;
             foreach (string serv in servlist)
             {
-                ListViewItem item = new ListViewItem();
-                item.Text = serv;
-                listView2.Items.Add(item);
+                itemserv = new ListViewItem();
+                itemserv.Text = serv;
+                listView2.Items.Add(itemserv);
                 if (servBLs.Contains(serv))
                 {
                     listView2.Items[j].Checked = true;
                 }
                 j++;
+                Thread.Sleep(1);
             }
-            this.listView1.ItemCheck += ListView1_ItemCheck;
             this.listView2.ItemCheck += ListView2_ItemCheck;
-            while (!closed)
+            for (; ; )
             {
-                procnames = processnames();
-                procnames = procnames.Remove(procnames.Length - 1);
-                procnames = procnames.Substring(1);
-                procnames = procnames.Replace(".exe", "");
-                processes = procnames.Split(',').ToList();
-                foreach (string proc in processes)
-                {
-                    if (this.listView1.FindItemWithText(proc) == null & proc != "")
-                    {
-                        ListViewItem item = new ListViewItem();
-                        item.Text = proc;
-                        listView1.Items.Add(item);
-                    }
-                }
-                string procNames = procnamesbl;
-                if (procNames != "")
-                    procblrecs = killProcessByNames(procNames).Replace(".exe", "").Split(',').ToList();
+                if (closed)
+                    break;
                 services = ServiceController.GetServices();
                 foreach (ServiceController service in services)
                 {
@@ -164,60 +178,58 @@ namespace StopIt
                         {
                             if (this.listView2.FindItemWithText(service.ServiceName) == null)
                             {
-                                ListViewItem item = new ListViewItem();
-                                item.Text = service.ServiceName;
-                                listView2.Items.Add(item);
+                                itemserv = new ListViewItem();
+                                itemserv.Text = service.ServiceName;
+                                listView2.Items.Add(itemserv);
                             }
-                            var name = service.ServiceName;
-                            if (name.Length > 7)
-                                name = name.Substring(0, 7);
+                            servNames = service.ServiceName;
+                            if (servNames.Length > 7)
+                                servNames = servNames.Substring(0, 7);
                             servblrecs = servBLs;
-                            if (servblrecs.Any(n => n.StartsWith(name)))
+                            if (servblrecs.Any(n => n.StartsWith(servNames)))
                             {
                                 service.Stop();
-                                var timeout = new TimeSpan(0, 0, 5);
                                 service.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
                             }
                         }
                     }
                     catch { }
+                    Thread.Sleep(1);
                 }
-                Thread.Sleep(300);
+                Thread.Sleep(140);
             }
         }
         private void ListView1_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            try
+            ListView listview = listView1;
+            if (listview.Items[e.Index].Checked)
             {
-                ListView listview = listView1;
-                if (listview.Items[e.Index].Checked)
+                int index = procBLs.IndexOf(listview.Items[e.Index].Text);
+                if (index >= 0)
                 {
-                    int index = procBLs.IndexOf(listview.Items[e.Index].Text);
-                    if (index >= 0)
+                    procBLs.RemoveAt(index);
+                    procnamesbl = "";
+                    foreach (string procName in procBLs)
                     {
-                        procBLs.RemoveAt(index);
-                        procnamesbl = "";
-                        foreach (string procName in procBLs)
-                        {
-                            procnamesbl += procName + ".exe ";
-                        }
-                    }
-                }
-                else
-                {
-                    int index = procBLs.IndexOf(listview.Items[e.Index].Text);
-                    if (index < 0)
-                    {
-                        procBLs.Add(listview.Items[e.Index].Text);
-                        procnamesbl = "";
-                        foreach (string procName in procBLs)
-                        {
-                            procnamesbl += procName + ".exe ";
-                        }
+                        procnamesbl += procName + ".exe ";
+                        Thread.Sleep(1);
                     }
                 }
             }
-            catch { }
+            else
+            {
+                int index = procBLs.IndexOf(listview.Items[e.Index].Text);
+                if (index < 0)
+                {
+                    procBLs.Add(listview.Items[e.Index].Text);
+                    procnamesbl = "";
+                    foreach (string procName in procBLs)
+                    {
+                        procnamesbl += procName + ".exe ";
+                        Thread.Sleep(1);
+                    }
+                }
+            }
         }
         private void ListView2_ItemCheck(object sender, ItemCheckEventArgs e)
         {
@@ -242,13 +254,14 @@ namespace StopIt
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             closed = true;
-            Thread.Sleep(200);
+            Thread.Sleep(300);
             procbls = procBLs.Distinct().ToList();
             using (StreamWriter createdfile = new StreamWriter("siprocblacklist.txt"))
             {
                 foreach (string procbl in procbls)
                 {
                     createdfile.WriteLine(procbl);
+                    Thread.Sleep(1);
                 }
                 createdfile.WriteLine("");
                 createdfile.WriteLine("");
@@ -260,6 +273,7 @@ namespace StopIt
                 foreach (string servbl in servbls)
                 {
                     createdfile.WriteLine(servbl);
+                    Thread.Sleep(1);
                 }
                 createdfile.WriteLine("");
                 createdfile.WriteLine("");
