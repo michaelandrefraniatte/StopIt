@@ -43,5 +43,6 @@ cleanmgr
 upfc
 SpeechModelDownload
 UCPDMgr
+conhost
 
 
