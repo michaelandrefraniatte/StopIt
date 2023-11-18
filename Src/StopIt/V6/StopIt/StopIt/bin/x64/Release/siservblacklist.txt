@@ -16,7 +16,6 @@ NPSMSvc_899bd5
 CDPUserSvc_899bd5
 cbdhsvc_899bd5
 WerSvc
-UserManager
 sppsvc
 DsmSvc
 wuauserv
@@ -24,5 +23,9 @@ WaaSMedicSvc
 DoSvc
 camsvc
 DPS
+Wcmsvc
+Winmgmt
+TrkWks
+ShellHWDetection
 
 
