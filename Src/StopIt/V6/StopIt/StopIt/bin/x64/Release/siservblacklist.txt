@@ -27,5 +27,6 @@ Wcmsvc
 Winmgmt
 TrkWks
 ShellHWDetection
+UdkUserSvc_36793
 
 

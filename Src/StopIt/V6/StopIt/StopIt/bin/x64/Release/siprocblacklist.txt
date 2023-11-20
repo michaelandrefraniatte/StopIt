@@ -44,5 +44,6 @@ upfc
 SpeechModelDownload
 UCPDMgr
 conhost
+WerFaultSecure
 
 
