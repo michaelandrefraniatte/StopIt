@@ -22,10 +22,18 @@ Winmgmt
 TrkWks
 ShellHWDetection
 UdkUserSvc_36793
-NetSetupSvc
 AppIDSvc
 IKEEXT
 VaultSvc
 Netman
+NetSetupSvc
+NcbService
+BluetoothUserService_22f43
+ClipSVC
+DPS
+KeyIso
+AppXSvc
+wlidsvc
+TokenBroker
 
 
