@@ -2,11 +2,6 @@ SysMain
 UsoSvc
 AppReadiness
 NgcCtnrSvc
-WdiSystemHost
-TokenBroker
-wlidsvc
-AppXSvc
-ClipSVC
 EventLog
 wmiApSrv
 BITS
@@ -22,12 +17,15 @@ wuauserv
 WaaSMedicSvc
 DoSvc
 camsvc
-DPS
 Wcmsvc
 Winmgmt
 TrkWks
 ShellHWDetection
 UdkUserSvc_36793
 NetSetupSvc
+AppIDSvc
+IKEEXT
+VaultSvc
+Netman
 
 
