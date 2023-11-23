@@ -28,5 +28,6 @@ Winmgmt
 TrkWks
 ShellHWDetection
 UdkUserSvc_36793
+NetSetupSvc
 
 
