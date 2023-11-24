@@ -45,5 +45,7 @@ SpeechModelDownload
 UCPDMgr
 conhost
 WerFaultSecure
+SecurityHealthHost
+SecurityHealthService
 
 
