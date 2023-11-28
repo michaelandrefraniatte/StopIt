@@ -14,11 +14,11 @@ taskhostw
 GameBarPresenceWriter
 sc
 WmiApSrv
-MpCmdRun
 dllhost
 ApplicationFrameHost
 SystemSettings
 WMIADAP
+MpCmdRun
 MoUsoCoreWorker
 UsoClient
 sppsvc
@@ -47,5 +47,10 @@ conhost
 WerFaultSecure
 SecurityHealthHost
 SecurityHealthService
+StartMenuExperienceHost
+RuntimeBroker
+sihost
+csc
+cvtres
 
 
