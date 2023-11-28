@@ -42,5 +42,6 @@ DevicesFlowUserSvc_e95f44
 SecurityHealthHost
 SecurityHealthService
 hidserv
+DeviceAssociationService
 
 
