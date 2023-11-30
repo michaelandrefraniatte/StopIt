@@ -52,5 +52,6 @@ RuntimeBroker
 sihost
 csc
 cvtres
+dxdiag
 
 
