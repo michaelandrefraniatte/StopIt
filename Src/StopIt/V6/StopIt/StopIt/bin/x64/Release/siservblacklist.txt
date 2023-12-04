@@ -43,5 +43,7 @@ SecurityHealthHost
 SecurityHealthService
 hidserv
 DeviceAssociationService
+wscsvc
+DispBrokerDesktopSvc
 
 
