@@ -53,5 +53,7 @@ sihost
 csc
 cvtres
 dxdiag
+mpam-d
+MpSigStub
 
 
