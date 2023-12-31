@@ -47,5 +47,6 @@ wscsvc
 DispBrokerDesktopSvc
 W32Time
 gpsvc
+NgcSvc
 
 
