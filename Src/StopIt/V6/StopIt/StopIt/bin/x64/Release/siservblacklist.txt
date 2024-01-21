@@ -20,7 +20,6 @@ camsvc
 Wcmsvc
 Winmgmt
 TrkWks
-ShellHWDetection
 UdkUserSvc_36793
 AppIDSvc
 IKEEXT
@@ -46,7 +45,6 @@ DeviceAssociationService
 wscsvc
 DispBrokerDesktopSvc
 W32Time
-gpsvc
 NgcSvc
 
 
