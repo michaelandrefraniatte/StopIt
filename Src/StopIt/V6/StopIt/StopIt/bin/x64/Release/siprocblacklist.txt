@@ -1,5 +1,3 @@
-wermgr
-WerFault
 SearchHost
 UserOOBEBroker
 LockApp
@@ -9,10 +7,8 @@ ShellExperienceHost
 taskhostw
 GameBarPresenceWriter
 sc
-WmiApSrv
 ApplicationFrameHost
 SystemSettings
-WMIADAP
 MpCmdRun
 MoUsoCoreWorker
 UsoClient

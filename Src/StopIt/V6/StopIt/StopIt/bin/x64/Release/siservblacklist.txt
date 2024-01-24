@@ -1,9 +1,6 @@
-SysMain
-UsoSvc
 AppReadiness
 NgcCtnrSvc
 EventLog
-wmiApSrv
 BITS
 WpnUserService_899bd5
 OneSyncSvc_899bd5
@@ -17,12 +14,9 @@ wuauserv
 WaaSMedicSvc
 DoSvc
 camsvc
-Wcmsvc
-Winmgmt
 TrkWks
 UdkUserSvc_36793
 AppIDSvc
-IKEEXT
 VaultSvc
 Netman
 NetSetupSvc
@@ -30,10 +24,7 @@ NcbService
 BluetoothUserService_22f43
 ClipSVC
 DPS
-KeyIso
 AppXSvc
-wlidsvc
-TokenBroker
 WdiSystemHost
 webthreatdefusersvc_6e0d8f
 webthreatdefsvc
@@ -42,9 +33,7 @@ SecurityHealthHost
 SecurityHealthService
 hidserv
 DeviceAssociationService
-wscsvc
 DispBrokerDesktopSvc
 W32Time
-NgcSvc
 
 
