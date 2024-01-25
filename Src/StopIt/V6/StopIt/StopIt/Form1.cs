@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,6 +43,7 @@ namespace StopIt
         private static ListViewItem itemproc, itemserv;
         private static Process[] edgeprocesses;
         private static bool edgechecking = false;
+        private static int edgenumber = 0, edgenumbertemp = 0;
         private static bool closed = false, closeonicon = false;
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -319,6 +318,8 @@ namespace StopIt
                 {
                     edgechecking = false;
                     edgeprocesses = Process.GetProcessesByName("msedge");
+                    edgenumbertemp = edgenumber;
+                    edgenumber = edgeprocesses.Length;
                     foreach (Process edgeprocess in edgeprocesses)
                     {
                         if (edgeprocess.MainWindowTitle.Length > 0)
@@ -328,7 +329,7 @@ namespace StopIt
                         }
                         Thread.Sleep(1);
                     }
-                    if (!edgechecking & edgeprocesses.Length >= 5)
+                    if (!edgechecking & edgeprocesses.Length >= 5 & (edgenumbertemp - edgenumber > 0))
                     {
                         foreach (Process edgeprocess in edgeprocesses)
                         {
@@ -352,10 +353,10 @@ namespace StopIt
         }
         private void TrayMenuContext()
         {
-            this.notifyIcon1.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            this.notifyIcon1.ContextMenuStrip = new ContextMenuStrip();
             this.notifyIcon1.ContextMenuStrip.Items.Add("Quit", null, this.MenuTest1_Click);
         }
-        void MenuTest1_Click(object sender, EventArgs e)
+        private void MenuTest1_Click(object sender, EventArgs e)
         {
             closeonicon = true;
             this.Close();
