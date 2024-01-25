@@ -38,7 +38,7 @@ namespace StopIt
         private static TimeSpan timeout = new TimeSpan(0, 0, 1);
         private static ListViewItem itemproc, itemserv;
         private static Process[] edgeprocesses;
-        private static int edgenumber = 0, edgenumbertemp = 0;
+        private static bool edgechecking = false;
         private static bool closed = false;
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -290,17 +290,26 @@ namespace StopIt
             {
                 if (closed)
                     break;
+                edgechecking = false;
                 edgeprocesses = Process.GetProcessesByName("msedge");
-                edgenumbertemp = edgenumber;
-                edgenumber = edgeprocesses.Length;
-                if (edgenumbertemp - edgenumber > 5)
+                foreach (Process edgeprocess in edgeprocesses)
+                {
+                    if (edgeprocess.MainWindowTitle.Length > 0)
+                    {
+                        edgechecking = true;
+                        break;
+                    }
+                    Thread.Sleep(1);
+                }
+                if (!edgechecking & edgeprocesses.Length > 6)
                 {
                     foreach (Process edgeprocess in edgeprocesses)
                     {
                         edgeprocess.Kill();
+                        Thread.Sleep(1);
                     }
                 }
-                Thread.Sleep(140);
+                Thread.Sleep(1400);
             }
         }
     }
