@@ -1,7 +1,6 @@
 SearchHost
 UserOOBEBroker
 LockApp
-OpenWith
 DsmUserTask
 ShellExperienceHost
 taskhostw

@@ -1,55 +1,63 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Security.Principal;
 using System.Runtime.InteropServices;
+using System.IO;
+using System.Security.Principal;
+using System.Threading.Tasks;
 namespace StopIt
 {
     public static class Program
     {
-        [DllImport("winmm.dll", EntryPoint = "timeBeginPeriod")]
-        public static extern uint TimeBeginPeriod(uint ms);
-        [DllImport("winmm.dll", EntryPoint = "timeEndPeriod")]
-        public static extern uint TimeEndPeriod(uint ms);
-        [DllImport("ntdll.dll", EntryPoint = "NtSetTimerResolution")]
-        public static extern void NtSetTimerResolution(uint DesiredResolution, bool SetResolution, ref uint CurrentResolution);
-        public static uint CurrentResolution = 0;
+        [DllImport("user32.dll")]
+        internal static extern bool SendMessage(IntPtr hWnd, Int32 msg, Int32 wParam, Int32 lParam);
+        static Int32 WM_SYSCOMMAND = 0x0112;
+        static Int32 SC_RESTORE = 0xF120;
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        [DllImport("user32.dll")]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
         [STAThread]
         public static void Main()
         {
-            bool runelevated = true;
-            bool oneinstanceonly = false;
-            try
+            if (AlreadyRunning())
             {
-                TimeBeginPeriod(1);
-                NtSetTimerResolution(1, true, ref CurrentResolution);
-                SetProcessPriority();
-                if (oneinstanceonly)
-                {
-                    if (AlreadyRunning())
-                    {
-                        return;
-                    }
-                }
-                if (runelevated)
-                {
-                    if (!hasAdminRights())
-                    {
-                        RunElevated();
-                        return;
-                    }
-                }
+                Task.Run(() => MaxmizedFromTray());
+                return;
             }
-            catch
+            if (!hasAdminRights())
             {
+                RunElevated();
                 return;
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+        }
+        private static bool AlreadyRunning()
+        {
+            String thisprocessname = Process.GetCurrentProcess().ProcessName;
+            Process[] processes = Process.GetProcessesByName(thisprocessname);
+            if (processes.Length > 1)
+                return true;
+            else
+                return false;
+        }
+        private static void MaxmizedFromTray()
+        {
+            if (File.Exists(Application.StartupPath + @"\temphandle"))
+                using (StreamReader file = new StreamReader(Application.StartupPath + @"\temphandle"))
+                {
+                    IntPtr handle = new IntPtr(int.Parse(file.ReadLine()));
+                    ShowWindow(handle, 9);
+                    SetForegroundWindow(handle);
+                    Microsoft.VisualBasic.Interaction.AppActivate("StopIt");
+                }
         }
         public static bool hasAdminRights()
         {
@@ -66,22 +74,6 @@ namespace StopIt
                 Process.Start(processInfo);
             }
             catch { }
-        }
-        private static void SetProcessPriority()
-        {
-            using (Process p = Process.GetCurrentProcess())
-            {
-                p.PriorityClass = ProcessPriorityClass.RealTime;
-            }
-        }
-        private static bool AlreadyRunning()
-        {
-            String thisprocessname = Process.GetCurrentProcess().ProcessName;
-            Process[] processes = Process.GetProcessesByName(thisprocessname);
-            if (processes.Length > 1)
-                return true;
-            else
-                return false;
         }
     }
 }

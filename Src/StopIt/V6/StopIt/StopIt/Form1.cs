@@ -24,6 +24,10 @@ namespace StopIt
         [DllImport("stopitkills.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "killProcessByNames")]
         [return: MarshalAs(UnmanagedType.BStr)]
         public static extern string killProcessByNames(string processnames);
+        [DllImport("user32.dll")]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         [DllImport("winmm.dll", EntryPoint = "timeBeginPeriod")]
         public static extern uint TimeBeginPeriod(uint ms);
         [DllImport("winmm.dll", EntryPoint = "timeEndPeriod")]
@@ -39,7 +43,15 @@ namespace StopIt
         private static ListViewItem itemproc, itemserv;
         private static Process[] edgeprocesses;
         private static bool edgechecking = false;
-        private static bool closed = false;
+        private static bool closed = false, closeonicon = false;
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            using (StreamWriter createdfile = new StreamWriter(Application.StartupPath + @"\temphandle"))
+            {
+                createdfile.WriteLine(Process.GetCurrentProcess().MainWindowHandle);
+            }
+            TrayMenuContext();
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             TimeBeginPeriod(1);
@@ -303,7 +315,7 @@ namespace StopIt
                         }
                         Thread.Sleep(1);
                     }
-                    if (!edgechecking)
+                    if (!edgechecking & edgeprocesses.Length >= 5)
                     {
                         foreach (Process edgeprocess in edgeprocesses)
                         {
@@ -315,6 +327,44 @@ namespace StopIt
                 catch { }
                 Thread.Sleep(1400);
             }
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!closeonicon)
+            {
+                e.Cancel = true;
+                MinimzedTray();
+                return;
+            }
+        }
+        private void TrayMenuContext()
+        {
+            this.notifyIcon1.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            this.notifyIcon1.ContextMenuStrip.Items.Add("Quit", null, this.MenuTest1_Click);
+        }
+        void MenuTest1_Click(object sender, EventArgs e)
+        {
+            closeonicon = true;
+            this.Close();
+        }
+        private void MinimzedTray()
+        {
+            ShowWindow(Process.GetCurrentProcess().MainWindowHandle, 0);
+        }
+        private void MaxmizedFromTray()
+        {
+            if (File.Exists(Application.StartupPath + @"\temphandle"))
+                using (StreamReader file = new StreamReader(Application.StartupPath + @"\temphandle"))
+                {
+                    IntPtr handle = new IntPtr(int.Parse(file.ReadLine()));
+                    ShowWindow(handle, 9);
+                    SetForegroundWindow(handle);
+                    Microsoft.VisualBasic.Interaction.AppActivate("StopIt");
+                }
+        }
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            Task.Run(() => MaxmizedFromTray());
         }
     }
 }
