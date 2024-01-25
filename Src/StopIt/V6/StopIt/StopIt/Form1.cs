@@ -290,25 +290,29 @@ namespace StopIt
             {
                 if (closed)
                     break;
-                edgechecking = false;
-                edgeprocesses = Process.GetProcessesByName("msedge");
-                foreach (Process edgeprocess in edgeprocesses)
+                try
                 {
-                    if (edgeprocess.MainWindowTitle.Length > 0)
-                    {
-                        edgechecking = true;
-                        break;
-                    }
-                    Thread.Sleep(1);
-                }
-                if (!edgechecking & edgeprocesses.Length > 6)
-                {
+                    edgechecking = false;
+                    edgeprocesses = Process.GetProcessesByName("msedge");
                     foreach (Process edgeprocess in edgeprocesses)
                     {
-                        edgeprocess.Kill();
+                        if (edgeprocess.MainWindowTitle.Length > 0)
+                        {
+                            edgechecking = true;
+                            break;
+                        }
                         Thread.Sleep(1);
                     }
+                    if (!edgechecking)
+                    {
+                        foreach (Process edgeprocess in edgeprocesses)
+                        {
+                            edgeprocess.Kill();
+                            Thread.Sleep(1);
+                        }
+                    }
                 }
+                catch { }
                 Thread.Sleep(1400);
             }
         }
