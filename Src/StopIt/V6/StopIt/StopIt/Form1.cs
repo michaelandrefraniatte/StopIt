@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -31,11 +32,13 @@ namespace StopIt
         public static extern void NtSetTimerResolution(uint DesiredResolution, bool SetResolution, ref uint CurrentResolution);
         public static uint CurrentResolution = 0;
         public static int processid = 0;
-        private static List<string> procBLs = new List<string>(), procbls = new List<string>(), procblrecs = new List<string>(), processes = new List<string>();
-        private static List<string> servBLs = new List<string>(), servbls = new List<string>(), servblrecs = new List<string>(), services = new List<string>();
-        private static string procnames = "", procnamesbl = "", servnames = "", servnamesbl = "", procNames = "", servNames = "";
+        private static List<string> procBLs = new List<string>(), procbls = new List<string>(), processes = new List<string>();
+        private static List<string> servBLs = new List<string>(), servbls = new List<string>(), servblrecs = new List<string>();
+        private static string procnames = "", procnamesbl = "", procNames = "", servNames = "";
         private static TimeSpan timeout = new TimeSpan(0, 0, 1);
         private static ListViewItem itemproc, itemserv;
+        private static Process[] edgeprocesses;
+        private static int edgenumber = 0, edgenumbertemp = 0;
         private static bool closed = false;
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -43,6 +46,7 @@ namespace StopIt
             NtSetTimerResolution(1, true, ref CurrentResolution);
             Task.Run(() => StartStopItBlockProc());
             Task.Run(() => StartStopItBlockServ());
+            Task.Run(() => StartStopItEdge());
         }
         public void StartStopItBlockProc()
         {
@@ -278,6 +282,25 @@ namespace StopIt
                 createdfile.WriteLine("");
                 createdfile.WriteLine("");
                 createdfile.Close();
+            }
+        }
+        public void StartStopItEdge()
+        {
+            for (; ; )
+            {
+                if (closed)
+                    break;
+                edgeprocesses = Process.GetProcessesByName("msedge");
+                edgenumbertemp = edgenumber;
+                edgenumber = edgeprocesses.Length;
+                if (edgenumbertemp - edgenumber > 5)
+                {
+                    foreach (Process edgeprocess in edgeprocesses)
+                    {
+                        edgeprocess.Kill();
+                    }
+                }
+                Thread.Sleep(140);
             }
         }
     }
