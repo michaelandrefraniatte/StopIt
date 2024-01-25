@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;
@@ -128,7 +130,7 @@ namespace StopIt
                 procNames = procnamesbl;
                 if (procNames != "")
                     killProcessByNames(procNames);
-                Thread.Sleep(140);
+                Thread.Sleep(1000);
             }
         }
         public void StartStopItBlockServ()
@@ -212,7 +214,7 @@ namespace StopIt
                     catch { }
                     Thread.Sleep(1);
                 }
-                Thread.Sleep(140);
+                Thread.Sleep(1000);
             }
         }
         private void ListView1_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -270,7 +272,18 @@ namespace StopIt
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             closed = true;
-            Thread.Sleep(300);
+            FillList();
+        }
+        [STAThread]
+        private void FillList()
+        {
+            Thread newThread = new Thread(new ThreadStart(fillLists));
+            newThread.SetApartmentState(ApartmentState.STA);
+            newThread.Start();
+        }
+        private void fillLists()
+        {
+            Thread.Sleep(3000);
             procbls = procBLs.Distinct().ToList();
             using (StreamWriter createdfile = new StreamWriter("siprocblacklist.txt"))
             {
@@ -325,7 +338,7 @@ namespace StopIt
                     }
                 }
                 catch { }
-                Thread.Sleep(1400);
+                Thread.Sleep(1000);
             }
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
