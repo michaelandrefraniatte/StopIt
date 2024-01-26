@@ -6,6 +6,8 @@ ShellExperienceHost
 taskhostw
 GameBarPresenceWriter
 sc
+csc
+cvtres
 ApplicationFrameHost
 SystemSettings
 MpCmdRun
@@ -39,5 +41,8 @@ SecurityHealthService
 dxdiag
 mpam-d
 MpSigStub
+CompatTelRunner
+MoNotificationUx
+WUDFHost
 
 

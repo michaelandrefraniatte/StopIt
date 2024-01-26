@@ -35,5 +35,7 @@ hidserv
 DeviceAssociationService
 DispBrokerDesktopSvc
 W32Time
+wscsvc
+UsoSvc
 
 
