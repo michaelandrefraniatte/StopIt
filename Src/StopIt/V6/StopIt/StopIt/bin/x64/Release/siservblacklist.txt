@@ -37,5 +37,6 @@ DispBrokerDesktopSvc
 W32Time
 wscsvc
 UsoSvc
+gpsvc
 
 
