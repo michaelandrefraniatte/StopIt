@@ -38,5 +38,11 @@ W32Time
 wscsvc
 UsoSvc
 gpsvc
+UserDataSvc_fa68b2
+UnistoreSvc_fa68b2
+UdkUserSvc_fa68b2
+PimIndexMaintenanceSvc_fa68b2
+DevicesFlowUserSvc_fa68b2
+CDPUserSvc_fa68b2
 
 
