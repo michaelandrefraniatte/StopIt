@@ -43,6 +43,7 @@
             this.listView1.Size = new System.Drawing.Size(262, 373);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listView1_KeyDown);
             // 
             // listView2
             // 
@@ -52,6 +53,7 @@
             this.listView2.Size = new System.Drawing.Size(262, 373);
             this.listView2.TabIndex = 1;
             this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listView2_KeyDown);
             // 
             // notifyIcon1
             // 

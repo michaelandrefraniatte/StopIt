@@ -49,6 +49,14 @@ namespace StopIt
         {
             OnKeyDown(e.KeyData);
         }
+        private void listView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            OnKeyDown(e.KeyData);
+        }
+        private void listView2_KeyDown(object sender, KeyEventArgs e)
+        {
+            OnKeyDown(e.KeyData);
+        }
         private void OnKeyDown(Keys keyData)
         {
             if (keyData == Keys.F1)
