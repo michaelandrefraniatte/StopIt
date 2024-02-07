@@ -2,13 +2,14 @@
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.IO;
 using System.Security.Principal;
 
 namespace StopIt
 {
     public static class Program
     {
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
         [DllImport("user32.dll")]
         static extern bool SetForegroundWindow(IntPtr hWnd);
         [DllImport("user32.dll")]
@@ -17,12 +18,12 @@ namespace StopIt
         /// Point d'entrée principal de l'application.
         /// </summary>
         [STAThread]
-        public static void Main()
+        static void Main()
         {
             if (AlreadyRunning())
             {
-                if (File.Exists(Application.StartupPath + @"\temphandle"))
-                    using (StreamReader file = new StreamReader(Application.StartupPath + @"\temphandle"))
+                if (System.IO.File.Exists(Application.StartupPath + @"\temphandle"))
+                    using (System.IO.StreamReader file = new System.IO.StreamReader(Application.StartupPath + @"\temphandle"))
                     {
                         IntPtr handle = new IntPtr(int.Parse(file.ReadLine()));
                         ShowWindow(handle, 9);
