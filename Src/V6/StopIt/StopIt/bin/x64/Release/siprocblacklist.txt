@@ -1,4 +1,4 @@
-SearchHost
+﻿SearchHost
 UserOOBEBroker
 LockApp
 DsmUserTask
@@ -44,6 +44,5 @@ MpSigStub
 CompatTelRunner
 MoNotificationUx
 WUDFHost
-backgroundTaskHost
 
 
