@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Security.Principal;
-using System.Threading.Tasks;
+
 namespace StopIt
 {
     public static class Program
@@ -13,24 +13,22 @@ namespace StopIt
         static extern bool SetForegroundWindow(IntPtr hWnd);
         [DllImport("user32.dll")]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-        [DllImport("winmm.dll", EntryPoint = "timeBeginPeriod")]
-        public static extern uint TimeBeginPeriod(uint ms);
-        [DllImport("winmm.dll", EntryPoint = "timeEndPeriod")]
-        public static extern uint TimeEndPeriod(uint ms);
-        [DllImport("ntdll.dll", EntryPoint = "NtSetTimerResolution")]
-        public static extern void NtSetTimerResolution(uint DesiredResolution, bool SetResolution, ref uint CurrentResolution);
-        public static uint CurrentResolution = 0;
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
         [STAThread]
         public static void Main()
         {
-            TimeBeginPeriod(1);
-            NtSetTimerResolution(1, true, ref CurrentResolution);
             if (AlreadyRunning())
             {
-                Task.Run(() => MaxmizedFromTray());
+                if (File.Exists(Application.StartupPath + @"\temphandle"))
+                    using (StreamReader file = new StreamReader(Application.StartupPath + @"\temphandle"))
+                    {
+                        IntPtr handle = new IntPtr(int.Parse(file.ReadLine()));
+                        ShowWindow(handle, 9);
+                        SetForegroundWindow(handle);
+                        Microsoft.VisualBasic.Interaction.AppActivate("StopIt");
+                    }
                 return;
             }
             if (!hasAdminRights())
@@ -50,17 +48,6 @@ namespace StopIt
                 return true;
             else
                 return false;
-        }
-        private static void MaxmizedFromTray()
-        {
-            if (File.Exists(Application.StartupPath + @"\temphandle"))
-                using (StreamReader file = new StreamReader(Application.StartupPath + @"\temphandle"))
-                {
-                    IntPtr handle = new IntPtr(int.Parse(file.ReadLine()));
-                    ShowWindow(handle, 9);
-                    SetForegroundWindow(handle);
-                    Microsoft.VisualBasic.Interaction.AppActivate("StopIt");
-                }
         }
         public static bool hasAdminRights()
         {
