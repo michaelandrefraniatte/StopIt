@@ -44,5 +44,6 @@ UdkUserSvc_fa68b2
 PimIndexMaintenanceSvc_fa68b2
 DevicesFlowUserSvc_fa68b2
 CDPUserSvc_fa68b2
+GameInputSvc
 
 

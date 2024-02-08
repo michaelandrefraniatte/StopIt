@@ -44,5 +44,6 @@ MpSigStub
 CompatTelRunner
 MoNotificationUx
 WUDFHost
+GameInputSvc
 
 
