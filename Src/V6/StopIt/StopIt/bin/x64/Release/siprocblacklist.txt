@@ -1,5 +1,3 @@
-SearchHost
-UserOOBEBroker
 LockApp
 DsmUserTask
 ShellExperienceHost
@@ -8,12 +6,8 @@ GameBarPresenceWriter
 sc
 csc
 cvtres
-ApplicationFrameHost
-SystemSettings
 MpCmdRun
-MoUsoCoreWorker
 UsoClient
-sppsvc
 TiWorker
 TrustedInstaller
 dxgiadaptercache
@@ -45,5 +39,9 @@ CompatTelRunner
 MoNotificationUx
 WUDFHost
 GameInputSvc
+sppsvc
+MoUsoCoreWorker
+UserOOBEBroker
+SearchHost
 
 
