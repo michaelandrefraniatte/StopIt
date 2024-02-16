@@ -7,7 +7,6 @@ OneSyncSvc_899bd5
 NPSMSvc_899bd5
 CDPUserSvc_899bd5
 cbdhsvc_899bd5
-WerSvc
 sppsvc
 DsmSvc
 wuauserv
@@ -35,7 +34,6 @@ hidserv
 DeviceAssociationService
 DispBrokerDesktopSvc
 W32Time
-wscsvc
 UsoSvc
 gpsvc
 UserDataSvc_fa68b2
