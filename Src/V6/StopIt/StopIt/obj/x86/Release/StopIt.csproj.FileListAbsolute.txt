@@ -1,0 +1,10 @@
+C:\Users\micha\Documents\github\StopIt\Src\V6\StopIt\StopIt\bin\x86\Release\StopIt.exe.config
+C:\Users\micha\Documents\github\StopIt\Src\V6\StopIt\StopIt\bin\x86\Release\StopIt.exe
+C:\Users\micha\Documents\github\StopIt\Src\V6\StopIt\StopIt\bin\x86\Release\StopIt.pdb
+C:\Users\micha\Documents\github\StopIt\Src\V6\StopIt\StopIt\obj\x86\Release\StopIt.csproj.AssemblyReference.cache
+C:\Users\micha\Documents\github\StopIt\Src\V6\StopIt\StopIt\obj\x86\Release\StopIt.Form1.resources
+C:\Users\micha\Documents\github\StopIt\Src\V6\StopIt\StopIt\obj\x86\Release\StopIt.Properties.Resources.resources
+C:\Users\micha\Documents\github\StopIt\Src\V6\StopIt\StopIt\obj\x86\Release\StopIt.csproj.GenerateResource.cache
+C:\Users\micha\Documents\github\StopIt\Src\V6\StopIt\StopIt\obj\x86\Release\StopIt.csproj.CoreCompileInputs.cache
+C:\Users\micha\Documents\github\StopIt\Src\V6\StopIt\StopIt\obj\x86\Release\StopIt.exe
+C:\Users\micha\Documents\github\StopIt\Src\V6\StopIt\StopIt\obj\x86\Release\StopIt.pdb
