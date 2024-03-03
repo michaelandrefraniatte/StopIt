@@ -43,5 +43,10 @@ PimIndexMaintenanceSvc_fa68b2
 DevicesFlowUserSvc_fa68b2
 CDPUserSvc_fa68b2
 GameInputSvc
+NgcSvc
+wscsvc
+WerSvc
+UserManager
+TextInputManagementService
 
 

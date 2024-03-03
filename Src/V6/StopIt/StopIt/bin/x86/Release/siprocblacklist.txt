@@ -43,5 +43,11 @@ sppsvc
 MoUsoCoreWorker
 UserOOBEBroker
 SearchHost
+dllhost
+backgroundTaskHost
+msiexec
+rundll32
+SystemSettings
+ApplicationFrameHost
 
 
