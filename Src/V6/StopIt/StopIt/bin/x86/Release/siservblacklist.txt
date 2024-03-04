@@ -45,8 +45,6 @@ CDPUserSvc_fa68b2
 GameInputSvc
 NgcSvc
 wscsvc
-WerSvc
-UserManager
-TextInputManagementService
+SysMain
 
 
