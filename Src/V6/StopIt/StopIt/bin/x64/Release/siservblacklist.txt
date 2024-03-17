@@ -44,5 +44,7 @@ DevicesFlowUserSvc_fa68b2
 CDPUserSvc_fa68b2
 GameInputSvc
 SysMain
+CloudBackupRestoreSvc_31319
+wscsvc
 
 
