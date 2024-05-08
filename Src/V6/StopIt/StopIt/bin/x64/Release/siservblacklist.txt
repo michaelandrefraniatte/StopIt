@@ -46,5 +46,14 @@ GameInputSvc
 SysMain
 CloudBackupRestoreSvc_31319
 wscsvc
+HPAppHelperCap
+HPDiagsCap
+HPNetworkCap
+HPSysInfoCap
+InventorySvc
+HpTouchpointAnalyticsService
+PlugPlay
+QWAVE
+IntelAudioService
 
 

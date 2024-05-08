@@ -43,5 +43,11 @@ sppsvc
 MoUsoCoreWorker
 UserOOBEBroker
 SearchHost
+TouchpointAnalyticsClientService
+SysInfoCap
+NetworkCap
+DiagsCap
+AppHelperCap
+unsecapp
 
 
