@@ -44,5 +44,11 @@ DevicesFlowUserSvc_fa68b2
 CDPUserSvc_fa68b2
 GameInputSvc
 SysMain
+Intel(R) TPM Provisioning Service
+LMS
+LSM
+BcastDVRUserService_3e4f8
+WerSvc
+NgcSvc
 
 
